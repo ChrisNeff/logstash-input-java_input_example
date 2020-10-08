@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 
 // class name must match plugin name
@@ -19,16 +19,19 @@ import java.util.function.Consumer;
 public class JavaInputExample implements Input {
 
     public static final PluginConfigSpec<Long> EVENT_COUNT_CONFIG =
-            PluginConfigSpec.numSetting("count", 3);
+            PluginConfigSpec.numSetting("count", 20);
 
     public static final PluginConfigSpec<String> PREFIX_CONFIG =
-            PluginConfigSpec.stringSetting("prefix", "message");
+            PluginConfigSpec.stringSetting("prefix", "message-CNeff");
 
     private String id;
     private long count;
     private String prefix;
     private final CountDownLatch done = new CountDownLatch(1);
     private volatile boolean stopped;
+
+    //private final ScheduledExecutorService scheduledExecutorService =
+    //        Executors.newScheduledThreadPool(1);
 
     // all plugins must provide a constructor that accepts id, Configuration, and Context
     public JavaInputExample(String id, Configuration config, Context context) {
